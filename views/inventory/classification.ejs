@@ -1,0 +1,11 @@
+<!-- This view consists of three distinct sections: A content heading, a message, and the inventory items display. -->
+
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else { res.redirect('/') } %>
+
+<!-- display a message -->
+<%# messages() %>
+
+<!-- All the logic and building were done previously, the view only displays the result. -->
+<%- grid %>
