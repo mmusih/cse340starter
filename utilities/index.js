@@ -6,6 +6,7 @@ const Util = {};
  ************************** */
 Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications();
+  // console.log(data.rows[0].classification_name);
   let list = "<ul>";
   list += '<li><a href="/" title="Home page">Home</a></li>';
   data.rows.forEach((row) => {
@@ -77,6 +78,44 @@ Util.buildClassificationGrid = async function (data) {
   return grid;
 };
 
+/* **************************************
+ * Build the Inventory Item view HTML
+ * ************************************ */
+Util.buildIventoryItem = async function (data) {
+  let item;
+  const vehicle = data[0];
+  if (data.length > 0) {
+    item = '<div id ="car" class = "car">';
+    item += '<div id ="car-image" class = "car-image">';
+    item +=
+      '<img src="' +
+      vehicle.inv_image +
+      '" alt="Image of ' +
+      vehicle.inv_make +
+      " " +
+      vehicle.inv_model +
+      ' on CSE Motors" />';
+    item += "</div>";
+    item += '<div id ="info-display" class = "info-display">';
+    item += '<p class="car-details">';
+    item +=
+      "Mileage: " + new Intl.NumberFormat("en-US").format(vehicle.inv_miles);
+    item += "<br>";
+    item += "Make: " + vehicle.inv_make;
+    item += "<br>";
+    item += "Model: " + vehicle.inv_model;
+    item += "<br>";
+    item += "Year: " + vehicle.inv_year;
+    item += "<br>";
+    item += "Description: " + vehicle.inv_description;
+    item += "</p>";
+    item += "</div>";
+    item += "</div>";
+  } else {
+    item += '<p class="notice">Sorry, no matching vehicle could be found.</p>';
+  }
+  return item;
+};
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for

@@ -305,3 +305,34 @@ figure figcaption {
     margin-top: 0;
   }
 }
+
+/* For vehicle display in vehicle-view view */
+
+.car-image img {
+  width: 100%;
+  /* max-width: 50px; */
+}
+
+.car-details {
+  font-size: large;
+  font-weight: bolder;
+  padding: 0.3em;
+}
+
+@media only screen and (min-width: 768px) {
+  #car {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1em;
+    box-sizing: border-box;
+  }
+
+  #car-image {
+    grid-column: 1/2;
+  }
+
+  #info-display {
+    grid-column: 2/3;
+    grid-row: 1/2;
+  }
+}
