@@ -304,6 +304,19 @@ figure figcaption {
   #review {
     margin-top: 0;
   }
+
+  /* form styling */
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  select {
+    width: 50%;
+  }
+
+  input[type="submit"] {
+    width: 50%;
+  }
 }
 
 /* For vehicle display in vehicle-view view */
@@ -335,4 +348,129 @@ figure figcaption {
     grid-column: 2/3;
     grid-row: 1/2;
   }
+}
+
+/* style notice messages */
+
+.notice {
+  color: red;
+  font-weight: bold;
+}
+
+/* styling for forms */
+
+/* Style the form container */
+form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Style form labels */
+label {
+  font-weight: bold;
+}
+
+/* Style form inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+#classificationList {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Style the submit button */
+input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Style the password visibility toggle */
+#pswdBtn {
+  cursor: pointer;
+  color: #007bff;
+}
+
+#pswdBtn:hover {
+  text-decoration: underline;
+}
+
+#pswdBtn {
+  border: 2px solid #000;
+  border-radius: 5px;
+  padding: 2px;
+  margin-top: 1em;
+  font-size: small;
+  width: 7em;
+  text-align: center;
+}
+
+/* Style for invalid inputs */
+input:required:invalid,
+textarea:required:invalid,
+#classificationList:required:invalid {
+  border: 1px solid red;
+}
+
+input:focus:invalid,
+textarea:focus:invalid,
+#classificationList:focus:invalid {
+  outline: none;
+  box-shadow: 0 0 5px red;
+}
+
+/* Style for valid inputs */
+input:required:valid,
+textarea:required:valid,
+#classificationList:required:valid {
+  border: 1px solid green;
+  background-color: #90ee90;
+}
+
+#spanpass {
+  display: inline-block;
+  padding: 5px;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the links container */
+.links {
+  text-align: center;
+}
+
+/* Style the links inside the div */
+.links a {
+  text-decoration: none;
+  color: #333;
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px;
+  border: 2px solid #333;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Style the links when hovered */
+.links a:hover {
+  background-color: #333;
+  color: #fff;
 }

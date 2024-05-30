@@ -1,0 +1,35 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else { res.redirect('/') } %>
+
+<!-- display messages -->
+<%- messages() %>
+
+<!-- to display errors -->
+
+<form action="/account/login" method="post">
+  <label for="account_email">Email:</label><br />
+  <input
+    type="email"
+    name="account_email"
+    id="email"
+    required
+    value="<%= locals.account_email %>"
+    placeholder="Enter a registered email address"
+  /><br /><br />
+  <label for="clientPassword">Password:</label><br />
+  <input
+    type="password"
+    name="clientPassword"
+    id="clientPassword"
+    required
+    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+  />
+  <span id="spanpass"
+    >Passwords must be at least 12 characters and contain at least 1 number, 1
+    capital letter and 1 special character</span
+  ><br /><br />
+  <input type="submit" value="Sign in" />
+</form>
+
+<p>No account? :<a href="/account/register">Sign Up</a></p>
