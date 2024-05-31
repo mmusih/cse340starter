@@ -5,15 +5,42 @@
 <!-- display a message -->
 <%- messages() %>
 
+<!-- to display errors -->
+<% if (errors) { %>
+<ul class="notice">
+  <% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
+
 <form action="/inv/add-inventory" method="post">
   <label for="classification">Classification:</label>
   <%- classificationList %>
   <label for="inv_make">Make:</label>
-  <input type="text" id="inv_make" name="inv_make" required /><br />
+  <input
+    type="text"
+    id="inv_make"
+    name="inv_make"
+    required
+    value="<%= locals.inv_make %>"
+  /><br />
   <label for="inv_make">Model:</label>
-  <input type="text" id="inv_model" name="inv_model" required /><br />
+  <input
+    type="text"
+    id="inv_model"
+    name="inv_model"
+    required
+    value="<%= locals.inv_model %>"
+  /><br />
   <label for="inv_year">Year:</label>
-  <input type="number" id="inv_year" name="inv_year" required /><br />
+  <input
+    type="number"
+    id="inv_year"
+    name="inv_year"
+    required
+    value="<%= locals.inv_year %>"
+  /><br />
   <label for="inv_description">Description:</label>
   <textarea
     type="textarea"
@@ -21,17 +48,48 @@
     name="inv_description"
     rows="3"
     required
-  ></textarea
+  >
+<%= locals.inv_description %></textarea
   ><br />
   <label for="inv_image">Image:</label>
-  <input type="text" id="inv_image" name="inv_image" required /><br />
+  <input
+    type="text"
+    id="inv_image"
+    name="inv_image"
+    required
+    value="<%= locals.inv_image %>"
+  /><br />
   <label for="inv_thumbnail">Thumbnail:</label>
-  <input type="text" id="inv_thumbnail" name="inv_thumbnail" required /><br />
+  <input
+    type="text"
+    id="inv_thumbnail"
+    name="inv_thumbnail"
+    required
+    value="<%= locals.inv_thumbnail %>"
+  /><br />
   <label for="inv_price">Price:</label>
-  <input type="number" id="inv_price" name="inv_price" required /><br />
+  <input
+    type="number"
+    id="inv_price"
+    name="inv_price"
+    required
+    value="<%= locals.inv_price %>"
+  /><br />
   <label for="inv_miles">Miles:</label>
-  <input type="number" id="inv_miles" name="inv_miles" required /><br />
+  <input
+    type="number"
+    id="inv_miles"
+    name="inv_miles"
+    required
+    value="<%= locals.inv_miles %>"
+  /><br />
   <label for="inv_color">Color:</label>
-  <input type="text" id="inv_color" name="inv_color" required /><br />
+  <input
+    type="text"
+    id="inv_color"
+    name="inv_color"
+    required
+    value="<%= locals.inv_color %>"
+  /><br />
   <input type="submit" value="Add To Inventory" />
 </form>
