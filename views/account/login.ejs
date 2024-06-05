@@ -6,23 +6,32 @@
 <%- messages() %>
 
 <!-- to display errors -->
+<% if (errors) { %>
+<ul class="notice">
+  <% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
 
 <form action="/account/login" method="post">
   <label for="account_email">Email:</label><br />
   <input
-    type="email"
     name="account_email"
+    type="email"
     id="email"
     required
+    placeholder="Enter your email address"
     value="<%= locals.account_email %>"
     placeholder="Enter a registered email address"
   /><br /><br />
   <label for="clientPassword">Password:</label><br />
   <input
+    name="account_password"
     type="password"
-    name="clientPassword"
     id="clientPassword"
     required
+    placeholder="Enter your password"
     pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
   />
   <span id="spanpass"
@@ -31,5 +40,6 @@
   ><br /><br />
   <input type="submit" value="Sign in" />
 </form>
-
-<p>No account? :<a href="/account/register">Sign Up</a></p>
+<span id="spanregister"
+  ><p>No account? :<a href="/account/register">Sign Up</a></p>
+</span>

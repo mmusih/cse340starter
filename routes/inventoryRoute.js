@@ -19,10 +19,13 @@ router.get(
 );
 
 // Route to build management view
-router.get("/", invController.buildManagementLinks);
+router.get("/", utilities.handleErrors(invController.buildManagementLinks));
 
 // Route to build add classification view
-router.get("/add-classification", invController.buildAddClassification);
+router.get(
+  "/add-classification",
+  utilities.handleErrors(invController.buildAddClassification)
+);
 
 // Route to handle form submission for adding a new classification
 router.post(
@@ -33,7 +36,10 @@ router.post(
 );
 
 // Route to build add inventory view
-router.get("/add-inventory", invController.buildAddInventory);
+router.get(
+  "/add-inventory",
+  utilities.handleErrors(invController.buildAddInventory)
+);
 
 // Route to handle form submission for adding a new inventory item
 router.post(
@@ -41,6 +47,23 @@ router.post(
   invValidate.addInventoryRules(),
   invValidate.checkAddInventoryData,
   utilities.handleErrors(invController.addInventory)
+);
+
+router.get(
+  "/getInventory/:classification_id",
+  utilities.handleErrors(invController.getInventoryJSON)
+);
+
+router.get(
+  "/edit/:inv_id",
+  utilities.handleErrors(invController.editInventoryView) // router edit inventory
+);
+
+router.post(
+  "/edit/",
+  invValidate.newInventoryRules(),
+  invValidate.checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
 );
 
 module.exports = router;
