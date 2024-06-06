@@ -534,3 +534,14 @@ input[type="submit"][disabled] {
   color: #666666;
   cursor: not-allowed;
 }
+
+#confirmDelete {
+  text-align: center;
+  background-color: #ffcccc;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: #990000;
+  margin: 0 auto;
+  width: 70%;
+}
