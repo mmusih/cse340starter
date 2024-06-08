@@ -1,0 +1,24 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else { res.redirect('/') } %>
+    
+    <!-- display a message -->
+    <%- messages() %>
+    
+    <!-- to display errors -->
+    <% if (errors) { %>
+    <ul class="notice">
+      <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+    <% } %>
+
+    <ul id="listAll">
+      <% vehicles.forEach(vehicle => { %>
+        <li>
+          <h2><%= vehicle.inv_make %> <%= vehicle.inv_model %></h2>
+          <p>Price: $<%= vehicle.inv_price %></p>
+        </li>
+      <% }) %>
+    </ul>

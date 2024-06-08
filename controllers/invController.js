@@ -297,4 +297,20 @@ invCont.deleteInventoryItem = async function (req, res, next) {
   }
 };
 
+invCont.displayAllVehicles = async function (req, res) {
+  try {
+    const vehicles = await invModel.getAllVehiclesOrderedByPrice();
+    let nav = await utilities.getNav();
+    res.render("./inventory/display-all", { 
+      title: "All Vehicles", 
+      nav, 
+      errors: null,
+      vehicles });
+  } catch (error) {
+    console.error("Error fetching vehicles:", error);
+    req.flash("error", "Error fetching vehicles.");
+    res.redirect("/");
+  }
+}
+
 module.exports = invCont;

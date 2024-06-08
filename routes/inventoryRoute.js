@@ -41,6 +41,11 @@ router.get(
   utilities.handleErrors(invController.buildAddInventory)
 );
 
+// route to display all vehicles ordered by price
+router.get(
+  "/display-all", 
+  utilities.handleErrors(invController.displayAllVehicles));
+
 // Route to handle form submission for adding a new inventory item
 router.post(
   "/add-inventory",

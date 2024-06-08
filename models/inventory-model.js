@@ -156,6 +156,21 @@ async function deleteInventoryItem(inv_id) {
   }
 }
 
+/* ***************************
+ *  Get all vehicles
+ * ************************** */
+async function getAllVehiclesOrderedByPrice () {
+  try {
+    const result = await pool.query(`
+      SELECT inv_make, inv_model, inv_price FROM inventory
+      ORDER BY inv_price ASC
+    `);
+    return result.rows;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
 //module.exports = { getClassifications };
 module.exports = {
   getClassifications,
@@ -166,4 +181,5 @@ module.exports = {
   updateInventory,
   getInventoryById,
   deleteInventoryItem,
+  getAllVehiclesOrderedByPrice,
 };
