@@ -139,13 +139,7 @@ Util.buildClassificationList = async function (classification_id = null) {
 };
 
 Util.buildLogin = async function () {};
-/* ****************************************
- * Middleware For Handling Errors
- * Wrap other function in this for
- * General Error Handling
- **************************************** */
-Util.handleErrors = (fn) => (req, res, next) =>
-  Promise.resolve(fn(req, res, next)).catch(next);
+
 
 /* ****************************************
  * Middleware to check token validity
@@ -155,18 +149,20 @@ Util.checkJWTToken = (req, res, next) => {
     jwt.verify(
       req.cookies.jwt,
       process.env.ACCESS_TOKEN_SECRET,
-      function (err, accountData) {
+      (err, accountData) => {
         if (err) {
-          req.flash("Please log in");
+          req.flash("notice", "Please log in");
           res.clearCookie("jwt");
           return res.redirect("/account/login");
         }
+        console.log('Account Data:', accountData);  // Debugging line
         res.locals.accountData = accountData;
-        res.locals.loggedin = 1;
+        res.locals.loggedin = true;
         next();
       }
     );
   } else {
+    res.locals.loggedin = false;
     next();
   }
 };
@@ -176,11 +172,80 @@ Util.checkJWTToken = (req, res, next) => {
  * ************************************ */
 Util.checkLogin = (req, res, next) => {
   if (res.locals.loggedin) {
+    const { accountData } = res.locals;
+    if (accountData && (accountData.accountType === "Employee" || accountData.accountType === "Admin"));
     next();
   } else {
-    req.flash("notice", "Please log in.");
+    req.flash("notice", "Unauthorized access.");
     return res.redirect("/account/login");
   }
+};
+
+// Define a middleware function to check if the user is an Employee or Admin
+Util.authorizeEmployeeOrAdmin = (req, res, next) => {
+  // Check if the user is logged in and has a valid JWT token
+  if (!req.locals || !req.locals.account_id) {
+    req.flash("error", "Unauthorized access.");
+    return res.redirect("/account/login");
+  }
+
+  const accountType = req.locals.account_type; 
+
+  // Check if the user is an Employee or Admin
+  if (accountType !== "Employee" && accountType !== "Admin") {
+    req.flash("error", "You do not have permission to access this page.");
+    return res.redirect("/");
+  }
+
+  // User is authorized, proceed to the next middleware or route handler
+  next();
+};
+
+Util.checkEmployeeOrAdmin = (req, res, next) => {
+  const { accountData } = res.locals;
+  if (accountData && (accountData.accountType === "Employee" || accountData.accountType === "Admin")) {
+    next();
+  } else {
+    req.flash("notice", "Unauthorized access.");
+    return res.redirect("/account/login");
+  }
+};
+
+Util.generateHeader = (req, res) => {
+  const { accountData } = res.locals;
+  let headerHTML = '<header id="top-header">';
+  headerHTML += '<div class="siteName">';
+  headerHTML += '<a href="/" title="Return to home page">CSE Motors</a>';
+  headerHTML += '</div>';
+  headerHTML += '<div id="tools">';
+  if (accountData.loggedin) {
+    // User is logged in, show Logout link and Welcome Basic link
+    headerHTML += '<a title="Logout" href="/account/logout">Logout</a>';
+    if (accountData.accountData.accountType === "Employee" || accountData.accountData.accountType === "Admin") {
+      headerHTML += '<a title="Account Management" href="/account/management">Welcome Basic</a>';
+    }
+  } else {
+    // User is not logged in, show My Account link
+    headerHTML += '<a title="My Account" href="/account/login">My Account</a>';
+  }
+  headerHTML += '</div>';
+  headerHTML += '</header>';
+  return headerHTML;
+}
+
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for
+ * General Error Handling
+ **************************************** */
+Util.handleErrors = (fn) => (req, res, next) => {
+  Promise.resolve(fn(req, res, next))
+    .catch(next)
+    .finally(() => {
+      // Ensure the loggedin and accountData locals are set
+      res.locals.loggedin = res.locals.loggedin || false;
+      res.locals.accountData = res.locals.accountData || null;
+    });
 };
 
 module.exports = Util;

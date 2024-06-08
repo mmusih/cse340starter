@@ -22,6 +22,9 @@ const cookieParser = require("cookie-parser");
 /* ***********************
  * Middleware
  * ************************/
+
+app.use(cookieParser());
+
 app.use(
   session({
     store: new (require("connect-pg-simple")(session))({
@@ -38,8 +41,6 @@ app.use(
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencodedf
 
-app.use(cookieParser());
-
 app.use(utilities.checkJWTToken);
 
 // Express Messages Middleware
@@ -48,6 +49,13 @@ app.use(function (req, res, next) {
   res.locals.messages = require("express-messages")(req, res);
   next();
 });
+
+// app.use((req, res, next) => {
+//   // Make `user` and `authenticated` available in templates
+//   res.locals.user = req.user
+//   res.locals.authenticated = !req.user.anonymous
+//   next()
+// })
 
 /* **********************
  *View Engine and Templates
@@ -66,7 +74,7 @@ app.use(static);
 app.get("/", utilities.handleErrors(baseController.buildHome));
 
 // Inventory routes
-app.use("/inv", utilities.handleErrors(inventoryRoute));
+app.use("/inv", utilities.checkLogin, utilities.handleErrors(inventoryRoute));
 app.use("/inventory", utilities.handleErrors(inventoryRoute));
 
 // Account routes

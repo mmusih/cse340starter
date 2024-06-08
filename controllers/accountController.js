@@ -126,16 +126,38 @@ async function accountLogin(req, res) {
 }
 
 /* ****************************************
- *  Deliver registration view
+ *  Deliver Management view
  * *************************************** */
-async function buildManagement(req, res, next) {
+async function buildManagement (req, res) {
   let nav = await utilities.getNav();
-  res.render("account/management", {
-    title: "Account Management",
+  const accountData = res.locals.accountData;
+  let greeting = 'Welcome';
+  let links = [];
+
+  if (accountData) {
+    if (accountData.account_type === 'Client') {
+      greeting = `Welcome, ${accountData.account_firstname}`;
+      links = [
+        { href: '/account/update', text: 'Update Account Information' },
+      ];
+    } else if (accountData.account_type === 'Employee' || accountData.account_type === 'Admin') {
+      greeting = `Welcome, ${accountData.account_firstname}`;
+      links = [
+        { href: '/account/update', text: 'Update Account Information' },
+        { href: '/inventory', text: 'Inventory Management' },
+      ];
+    }
+  }
+
+  res.render('account/management', {
+    title: 'Account Management',
     nav,
+    greeting,
+    links,
+    accountData,
     errors: null,
   });
-}
+};
 
 module.exports = {
   buildLogin,

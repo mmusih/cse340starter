@@ -44,24 +44,60 @@ h1 {
 /**
 Header styles
  */
-#top-header {
+ #top-header {
+  background-color: lightblue;
+  padding: 1em;
   display: flex;
   justify-content: space-between;
-  width: 95%;
-  padding-top: 2em;
-  padding-left: 2em;
+  align-items: center;
+  flex-wrap: wrap; /* Ensure content wraps on smaller screens */
 }
 
-.siteName {
-  font-size: large;
-  font-weight: 800;
-}
-
-header a {
-  align-self: center;
+#top-header .siteName a {
+  font-size: 1.5rem;
+  font-weight: bold;
   text-decoration: none;
-  color: #3a3a3a;
-  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 0.5em;
+}
+
+#top-header #tools {
+  display: flex;
+  flex-direction: column; /* Stack links vertically */
+  align-items: flex-start; /* Align links to the start (left) */
+  width: 100%;
+}
+
+#top-header #tools a {
+  text-decoration: none;
+  color: #333;
+  margin: 0.5em 0; /* Add some space between the links */
+  font-size: 1.2rem;
+}
+
+#top-header #tools a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive styles */
+@media (min-width: 600px) {
+  #top-header {
+    flex-wrap: nowrap; /* Prevent wrapping on larger screens */
+  }
+
+  #top-header .siteName,
+  #top-header #tools {
+    width: auto; /* Reset width for larger screens */
+  }
+
+  #top-header #tools {
+    flex-direction: row; /* Align links horizontally */
+    align-items: center; /* Center align links */
+  }
+
+  #top-header #tools a {
+    margin: 0 1em; /* Add horizontal space between links */
+  }
 }
 
 /**
@@ -544,4 +580,33 @@ input[type="submit"][disabled] {
   color: #990000;
   margin: 0 auto;
   width: 70%;
+}
+
+#managementV {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #e0f7fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  /* max-width: 100%; */
+  text-align: center;
+}
+
+#managementV li {
+  margin: 1rem 0;
+}
+
+#managementV a {
+  text-decoration: none;
+  color: #00796b;
+  font-size: 1.2rem;
+  display: block;
+  padding: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+#managementV a:hover {
+  background-color: #b2dfdb;
 }
