@@ -127,4 +127,68 @@ validate.checkloginData = async (req, res, next) => {
   next();
 };
 
+/*  **********************************
+ *  Update Account Data Validation Rules
+ * ********************************* */
+validate.AccountUpdateRules = () => {
+  return [
+  body("account_firstname")
+  .isLength({ min: 1 })
+  .trim()
+  .withMessage('First name is required.'),
+
+  body("account_lastname")
+  .isLength({ min: 1 })
+  .trim()
+  .withMessage('Last name is required.'),
+
+  body("account_email")
+  .isEmail()
+  .withMessage('Valid email is required.'),
+]};
+
+
+/* ******************************
+ * Check Account update data and update
+ * ***************************** */
+validate.checkAccountUpdate = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    req.flash('error', errors.array().map(err => err.msg).join(', '));
+    return res.redirect(`/account/update/${req.body.account_id}`);
+  }
+  next();
+}
+
+/*  **********************************
+ *  Update Password Validation Rules
+ * ********************************* */
+validate.PasswordChangeRules = () => {
+  return [
+   // password is required and must be strong password
+   body("account_password")
+   .trim()
+   .notEmpty()
+   .isStrongPassword({
+     minLength: 12,
+     minLowercase: 1,
+     minUppercase: 1,
+     minNumbers: 1, 
+     minSymbols: 1,
+   })
+   .withMessage("Password does not meet requirements."),
+]};
+
+/* ******************************
+ * Check password and update
+ * ***************************** */
+validate.checkPasswordUpdate = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    req.flash('error', errors.array().map(err => err.msg).join(', '));
+    return res.redirect(`/account/update/${req.body.account_id}`);
+  }
+  next();
+}
+
 module.exports = validate;
